@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Master Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="menu-screen" class="screen">
+            <div class="level-badge" id="menu-level-badge">Level 1</div>
+            <h1 class="glow-text">SSC MASTER</h1>
+            <p>Select your realm to begin.</p>
+            <div id="subject-buttons"></div>
+        </div>
+
+        <div id="quiz-screen" class="screen hidden">
+            <div class="header">
+                <span id="subject-title" class="neon-text">History</span>
+                <span id="question-counter">1 / 30</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+
+            <h2 id="question-text">Loading question...</h2>
+            
+            <div id="options-container"></div>
+
+            <div id="feedback-card" class="hidden">
+                <h3 id="feedback-title"></h3>
+                <div id="facts-container">
+                    <h4 class="neon-text">⚡ Important One-Liners:</h4>
+                    <ul id="facts-list"></ul>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button id="prev-btn" class="action-btn secondary-btn hidden">⬅ PREV</button>
+                    <button id="next-btn" class="action-btn">NEXT ➔</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen hidden">
+            <h1 class="glow-text">LESSON CLEARED!</h1>
+            <h2 id="final-score">Score: 0/30</h2>
+            <div id="level-up-msg" class="hidden glow-text" style="color: #00ffcc; margin-bottom: 20px;">🎉 LEVEL UP! 🎉</div>
+            
+            <button id="review-btn" class="action-btn secondary-btn" style="margin-bottom: 15px;">🔍 REVIEW ANSWERS</button>
+            <button id="next-set-btn" class="action-btn">NEXT SET ➔</button>
+            
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="#" onclick="location.reload()" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">Change Subject</a>
+            </p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

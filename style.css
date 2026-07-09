@@ -1,0 +1,84 @@
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; }
+body { 
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); 
+    color: #ffffff; 
+    display: flex; justify-content: center; align-items: center; 
+    min-height: 100vh; margin: 0; padding: 20px; 
+}
+
+#game-container { 
+    background: rgba(25, 25, 45, 0.85); 
+    backdrop-filter: blur(10px);
+    width: 100%; max-width: 750px; 
+    border-radius: 20px; padding: 35px; 
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.hidden { display: none !important; }
+
+.glow-text { text-align: center; color: #fff; text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f; letter-spacing: 2px; }
+.neon-text { color: #00ffcc; text-shadow: 0 0 8px rgba(0, 255, 204, 0.6); }
+
+.level-badge {
+    background: linear-gradient(90deg, #ff007f, #7000ff);
+    display: inline-block; padding: 8px 16px; border-radius: 20px;
+    font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+}
+
+.header { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; }
+
+/* Vibrant Progress Bar */
+.progress-bar { width: 100%; background: #1a1a3a; height: 12px; border-radius: 10px; margin-bottom: 30px; overflow: hidden; border: 1px solid #302b63; }
+#progress-fill { height: 100%; background: linear-gradient(90deg, #00ffcc, #00b3ff); width: 0%; transition: width 0.4s ease-out; }
+
+#question-text { font-size: 1.4rem; line-height: 1.5; margin-bottom: 25px; }
+
+/* Vibrant Buttons */
+button, .option-btn { 
+    width: 100%; background: #1e1e40; color: white; 
+    border: 2px solid #302b63; padding: 18px; font-size: 16px; 
+    border-radius: 12px; cursor: pointer; margin-bottom: 15px; text-align: left; 
+    transition: all 0.2s ease-in-out; 
+}
+button:hover, .option-btn:hover { background: #302b63; border-color: #00ffcc; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2); }
+
+#subject-buttons button { background: linear-gradient(45deg, #2b1055, #7597de); border: none; text-align: center; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+#subject-buttons button:hover { transform: scale(1.03); filter: brightness(1.2); }
+
+/* Neon Answer States */
+.option-btn.correct { background: rgba(0, 255, 204, 0.1) !important; border-color: #00ffcc !important; box-shadow: 0 0 15px rgba(0, 255, 204, 0.4); color: #00ffcc; font-weight: bold; }
+.option-btn.wrong { background: rgba(255, 0, 85, 0.1) !important; border-color: #ff0055 !important; box-shadow: 0 0 15px rgba(255, 0, 85, 0.4); color: #ff0055; font-weight: bold; }
+.option-btn:disabled { cursor: not-allowed; transform: none; }
+
+/* Fact Card */
+#feedback-card { background: rgba(10, 10, 25, 0.6); padding: 25px; margin-top: 25px; border-radius: 15px; border-top: 4px solid #fff; }
+#feedback-title { margin-top: 0; font-size: 1.5rem; }
+#feedback-card.success-border { border-top-color: #00ffcc; }
+#feedback-card.error-border { border-top-color: #ff0055; }
+#facts-container h4 { margin-top: 0; font-size: 1.2rem; }
+#facts-list { padding-left: 20px; line-height: 1.6; }
+#facts-list li { margin-bottom: 12px; font-size: 1.1rem; }
+
+.action-btn { background: linear-gradient(90deg, #ff8c00, #ff007f); border: none; text-align: center; font-weight: bold; font-size: 1.2rem; margin-top: 15px; }
+.action-btn:hover { background: linear-gradient(90deg, #ff007f, #7000ff); }
+
+/* Navigation Button Layout */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+.nav-buttons .action-btn {
+    margin-top: 0;
+    flex: 1;
+}
+.secondary-btn {
+    background: #1e1e40;
+    border: 2px solid #302b63;
+    color: #fff;
+}
+.secondary-btn:hover {
+    background: #302b63;
+    border-color: #7597de;
+}
