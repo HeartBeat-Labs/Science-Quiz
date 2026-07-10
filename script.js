@@ -15,6 +15,30 @@ const factsList = document.getElementById('facts-list');
 const nextBtn = document.getElementById('next-btn');
 const prevBtn = document.getElementById('prev-btn');
 const progressFill = document.getElementById('progress-fill');
+const backToMenuBtn = document.getElementById('back-to-menu-btn'); // New Button!
+
+// --- Hardware Back Button Logic (For Mobile) ---
+window.addEventListener('popstate', (event) => {
+    // If the user presses the phone's back button, go to the menu
+    quizScreen.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    menuScreen.classList.remove('hidden');
+});
+
+function returnToMenu() {
+    quizScreen.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    menuScreen.classList.remove('hidden');
+    history.replaceState({ screen: 'menu' }, ""); // Reset browser history to menu
+}
+
+// Visual UI Button Click
+backToMenuBtn.onclick = () => {
+    if(confirm("Return to Menu? Your progress for these specific questions will be saved.")) {
+        returnToMenu();
+    }
+};
+// -----------------------------------------------
 
 function updatePlayerLevel(addXP = false) {
     let stats = JSON.parse(localStorage.getItem('ssc_stats')) || { totalCorrect: 0, currentLevel: 1 };
@@ -32,6 +56,8 @@ async function loadGameData() {
         allData = await response.json();
         updatePlayerLevel();
         setupMenu();
+        // Tell the browser the starting page is the menu
+        history.replaceState({ screen: 'menu' }, ""); 
     } catch (error) {
         console.error("Data error:", error);
     }
@@ -58,9 +84,7 @@ function startLesson(subject) {
     let newQuestions = [];
     
     subjectData.forEach(q => {
-        // Reset state for new lesson
         q.userSelected = null; 
-        
         let p = progress[q.id];
         if (!p) {
             newQuestions.push(q);
@@ -80,7 +104,7 @@ function startLesson(subject) {
     
     if (currentLesson.length === 0) {
         alert("You have mastered all available questions for this subject! Come back tomorrow.");
-        location.reload();
+        returnToMenu();
         return;
     }
     
@@ -91,6 +115,9 @@ function startLesson(subject) {
     menuScreen.classList.add('hidden');
     resultScreen.classList.add('hidden'); 
     quizScreen.classList.remove('hidden');
+    
+    // Tell the browser we moved to a new "page" so the back button works
+    history.pushState({ screen: 'quiz' }, ""); 
     
     loadQuestion();
 }
@@ -115,7 +142,6 @@ function loadQuestion() {
     progressFill.style.width = `${(currentQuestionIndex / totalQ) * 100}%`;
     questionText.innerText = q.question;
     
-    // Manage Previous Button Visibility
     if (currentQuestionIndex > 0) {
         prevBtn.classList.remove('hidden');
     } else {
@@ -128,7 +154,6 @@ function loadQuestion() {
         btn.className = 'option-btn';
         btn.innerText = `${letter}) ${optionsObj[letter]}`;
         
-        // If question was already answered, restore state
         if (q.userSelected) {
             btn.disabled = true;
             if (letter === q.correct_answer) btn.classList.add('correct');
@@ -140,7 +165,6 @@ function loadQuestion() {
         optionsContainer.appendChild(btn);
     });
 
-    // If already answered, show the facts card immediately
     if (q.userSelected) {
         showFeedback(q.userSelected === q.correct_answer, q.correct_answer, q);
     }
@@ -148,7 +172,7 @@ function loadQuestion() {
 
 function handleAnswer(selected, correct, btnElement, questionData) {
     const isCorrect = (selected === correct);
-    questionData.userSelected = selected; // Save for previous button navigation
+    questionData.userSelected = selected; 
     
     optionsContainer.querySelectorAll('.option-btn').forEach(b => {
         b.disabled = true;
@@ -208,13 +232,11 @@ function saveProgress(questionId, isCorrect) {
     localStorage.setItem('ssc_progress', JSON.stringify(progress));
 }
 
-// Navigation Logic
 nextBtn.onclick = () => {
     currentQuestionIndex++;
     if (currentQuestionIndex < currentLesson.length) {
         loadQuestion();
     } else {
-        // End of set, show results
         quizScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
         document.getElementById('final-score').innerText = `Score: ${score}/${currentLesson.length}`;
@@ -240,7 +262,6 @@ document.getElementById('next-set-btn').onclick = () => {
     startLesson(currentSubject);
 };
 
-// Review Button Logic
 document.getElementById('review-btn').onclick = () => {
     currentQuestionIndex = 0;
     resultScreen.classList.add('hidden');
